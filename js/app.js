@@ -12,29 +12,40 @@ document.addEventListener('DOMContentLoaded', function () {
   const inputAsunto = document.querySelector('#asunto');
   const inputMensaje = document.querySelector('#mensaje');
   const formulario = document.querySelector('#formulario');
+  const btnSubmit = document.querySelector('#formulario button[type="submit"]')
 
 
   // Asignar eventos
   inputEmail.addEventListener('blur', validar);
-  inputAsunto.addEventListener('blur', validar);
-  inputMensaje.addEventListener('blur', validar);
+  inputAsunto.addEventListener('input', validar);
+  inputMensaje.addEventListener('input', validar);
 
 
   function validar(eve) {
+    const target = eve.target
+    const elementoPadre = target.parentElement
 
-    const elementoPadre = eve.target.parentElement
-
-    if (eve.target.value.trim() === '') {
-      mostrarAlerta(`El campo ${eve.target.id} es obligatorio`, elementoPadre);
+    if (target.value.trim() === '') {
+      mostrarAlerta(`El campo ${target.id} es obligatorio`, elementoPadre);
+      email[target.name] = '';
+      comprobarEmail();
       return;
     }
-
-    if (eve.target.id === 'email' && !validarEmail(elementoPadre)) {
+  
+    if (target.id === 'email' && !validarEmail(target.value)) {
       mostrarAlerta('El email no es válido.', elementoPadre);
+      email[target.name] = '';
+      comprobarEmail();
       return;
     }
 
     limpiarAlerta(elementoPadre);
+
+    // Asignar los valores
+    email[target.name] = target.value.trim().toLowerCase();
+
+    // Comprobar el objeto email
+    comprobarEmail();
   }
   
   function mostrarAlerta(mensaje, referencia) {
@@ -64,7 +75,17 @@ document.addEventListener('DOMContentLoaded', function () {
     return resultado;
   }
 
+  function comprobarEmail(params) {
+    if (Object.values(email).includes('')) {
+      btnSubmit.classList.add('opacity-50');
+      btnSubmit.disabled = true;
+      return;
+    }
 
+    btnSubmit.classList.remove('opacity-50');
+    btnSubmit.disabled = false;
+    
+  }
 
 
 
