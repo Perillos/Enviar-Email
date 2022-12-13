@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+  const email = {
+    email: '',
+    asunto: '',
+    mensaje: ''
+  }
+
+  
   // Seleccionar los elementos de la interfaz
   const inputEmail = document.querySelector('#email');
   const inputAsunto = document.querySelector('#asunto');
@@ -29,11 +36,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     limpiarAlerta(elementoPadre);
   }
-
+  
   function mostrarAlerta(mensaje, referencia) {
+    limpiarAlerta(referencia);
     
-
-
     // Generar alerta en HTML
     const error = document.createElement('P');
     error.textContent = mensaje;
@@ -46,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function limpiarAlerta(referencia) {
     // Comprueba si ya exite una alerta
     const alerta = referencia.querySelector('.bg-red-600');
+    
     if(alerta) {
       alerta.remove();
     }
