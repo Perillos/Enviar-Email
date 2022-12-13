@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    if (!validarEmail(elementoPadre)) {
+    if (eve.target.id === 'email' && !validarEmail(elementoPadre)) {
       mostrarAlerta('El email no es válido.', elementoPadre);
       return;
     }
